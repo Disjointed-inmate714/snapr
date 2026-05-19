@@ -7,18 +7,17 @@
 
 <h1>snapr</h1>
 
-<p>Self-hosted backup service for files and databases. Runs on a schedule, compresses and (optionally) encrypts your data, and uploads it to one or more storage backends. Comes with a web UI and a REST API.</p>
+<p>Self-hosted backup service for files and databases. Each job reads from one or more sources, packs the data into an archive (optionally encrypted), and uploads it to one or more storages — all on a cron schedule. The web UI and REST API let you see job status, follow live logs, trigger runs, and download archives.</p>
 
 <a href="https://github.com/maximseshuk/snapr/releases/"><img src="https://img.shields.io/github/v/release/maximseshuk/snapr?style=flat-square&logo=github" alt="GitHub release" /></a>
 <a href="https://github.com/maximseshuk/snapr/pkgs/container/snapr"><img src="https://img.shields.io/badge/ghcr.io-snapr-2496ed?style=flat-square&logo=docker&logoColor=white" alt="Docker image" /></a>
 <a href="https://github.com/maximseshuk/snapr/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/maximseshuk/snapr/ci.yml?style=flat-square&logo=github" alt="CI" /></a>
+<a href="https://goreportcard.com/report/github.com/maximseshuk/snapr"><img src="https://goreportcard.com/badge/github.com/maximseshuk/snapr?style=flat-square" alt="Go Report Card" /></a>
 <a href="https://snapr.seshuk.im/"><img src="https://img.shields.io/badge/docs-snapr.seshuk.im-blue?style=flat-square&logo=readthedocs&logoColor=white" alt="Documentation" /></a>
 <a href="https://github.com/maximseshuk/snapr/blob/main/LICENSE"><img src="https://img.shields.io/github/license/maximseshuk/snapr?style=flat-square" alt="license" /></a>
 <a href="https://ko-fi.com/V7V61UCT39"><img src="https://img.shields.io/badge/Ko--fi-Buy_me_a_coffee-ff5f5f?style=flat-square&logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
 
 </div>
-
-snapr runs backup jobs on a schedule. Each job reads from one or more **sources** (local files, Postgres, MySQL/MariaDB, MongoDB, Redis, SQLite, S3, Bunny), packs the result into an archive, and uploads it to one or more **storages** (local disk, S3-compatible, SFTP, WebDAV, Bunny). The web UI and REST API let you see job status, follow live logs, run a job manually, and download archives.
 
 ## Features
 
